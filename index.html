@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D1 Recap</title>
+    <link rel="stylesheet" href="./normalize.css">
+    <link rel="stylesheet" href="./style.css">
+
+
+</head>
+
+<body>
+
+    <h1>Loading...</h1>
+
+    <ul id="list" class="list">
+        <!-- <li>
+            <span class="position">1</span>
+            <span class="name">John Doe</span>
+            <span class="score score-success">100%</span>
+        </li> -->
+    </ul>
+
+    <button onclick="showDefaultList()">Original Order</button>
+    <button onclick="sortList()">Sort Scores</button>
+    <!-- <button onclick="sortAlphabetically()">Sort Alphabetically</button> -->
+
+
+    <script>
+
+        // reference data for exams score
+        const data = [
+            { name: "Amirezza", score: 50 },
+            { name: "Mantas", score: 10 },
+            { name: "Sam", score: 60 },
+            { name: "Bati", score: 90 },
+            { name: "Farhana", score: 100 },
+            { name: "Diana", score: 95 },
+        ]
+
+        // REQUIREMENTS:
+        // 1) take the data array, and generate as many LIs as we need to display the data in the page
+
+        // - take the #list node and generate new LIs inside
+        // - create inner LI elements
+        // - put span elements inside of LI 
+        // - put LI inside of the ul #list
+        // - check whether we need to add green or red scores background-color(s)
+
+        // 2) rearrange the original list, by order of scores
+
+        // 3) re-generate the list with the newly ordered array by using the initial function
+
+
+
+
+        const generateList = function (array) {
+            const ul = document.getElementById("list")
+            // taking the ul from the DOM into which we'll append new dynamically generated elements
+            ul.innerHTML = "" // making sure the list is empty by clearing out its innerHTML before we append any new element in
+
+
+            // "array" is a parameter representing the array passed as an arguement when generateList gets executed
+            // the amount of elements present in this "array" will determine how many cycles this for loop does
+            for (let i = 0; i < array.length; i++) {
+                const elementObj = array[i] // ...and also which element this array[i] represents
+
+                const li = document.createElement("li") // generating new "li"s on every iteration of the loop
+
+                // and subsequent spans for position, name, score
+                const position = document.createElement("span")
+                position.className = "position"
+                position.innerText = i + 1
+
+                const name = document.createElement("span")
+                name.className = "name"
+                name.innerText = elementObj.name
+
+                const score = document.createElement("span")
+                score.className = "score"
+
+                // if the score is higher or equal 60 the color will be green otherwise red
+                if (elementObj.score >= 60) {
+                    score.classList.add("score-success")
+                } else {
+                    score.classList.add("score-failure")
+                }
+
+                score.innerText = elementObj.score + "%" // percent symbol gets added as a string
+
+
+                // the spans go into the li
+                li.appendChild(position)
+                li.appendChild(name)
+                li.appendChild(score)
+                // the li goes into the ul list in the DOM, this is when the element becomes visible to the user
+                ul.appendChild(li)
+
+                //...and it will happen for as many items we have in the array
+            }
+        }
+
+        const sortList = function () {
+            // 1) cloning the original array
+            const clonedArray = Array.from(data)
+
+            // 3) sorting function used to create the condition of sorting
+            const sortByScores = function (objA, objB) {
+                if (objA.score > objB.score) {
+                    return -1 // returning -1 will move the compared item up
+                } else {
+                    return 1 // returning 1 will move the compared item down
+                }
+            }
+            // 2) sorting the original data array
+            // .sort() is going to mutate the array it's used upon, that's why we cloned "data" into "clonedArray"
+            clonedArray.sort(sortByScores)
+
+            //4) at this poing the array in clonedArray will have a different order and we can            
+            //   re-generatie a new list of list-items with the current clonedArray as a source
+            generateList(clonedArray)
+        }
+
+
+
+        const showDefaultList = function () {
+            // generating again the original list with the original "data" array passed 
+            // as parameter to the generateList function 
+            generateList(data)
+        }
+
+
+        window.addEventListener("DOMContentLoaded", function () {
+            // DOMContentLoaded fires when the DOM is ready,
+            // this happens automatically when the page loads
+
+            // so when it loads we are going to have the title changed
+            const h1 = document.querySelector("h1")
+            h1.innerText = "Leaderboard"
+
+            // the initial list gets generated by calling generateList with the default array "data"
+            generateList(data)
+        })
+
+        // window.onload = function () {
+            // alternative event to wait for ALL resources to be ready (happens later than the DOMContentLoaded)
+
+            // const h1 = document.querySelector("h1")
+            // h1.innerText = "Leaderboard"
+            // generateList(data)
+        // }
+    </script>
+</body>
+
+</html>

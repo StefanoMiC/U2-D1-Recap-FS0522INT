@@ -1,0 +1,55 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+button {
+  display: block;
+  margin-inline: auto;
+}
+
+.list {
+  max-width: 360px;
+  margin-inline: auto;
+  /* these two are centering the block ☝*/
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.list li {
+  background-color: hsl(0deg 0% 96%);
+  min-height: 10px;
+  padding-block: 8px;
+  padding-inline: 6px;
+}
+
+.list li .position {
+  padding-block: 4px;
+  display: inline-block;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.list li .name {
+  padding-block: 4px;
+  display: inline-block;
+}
+
+.list li .score {
+  float: right;
+  padding: 4px 6px;
+  border-radius: 3px;
+  font-weight: 500;
+  color: white;
+}
+
+.list li .score.score-success {
+  background-color: green;
+}
+
+.list li .score.score-failure {
+  background-color: red;
+}
